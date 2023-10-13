@@ -91,9 +91,10 @@ int main(int, char**){
 
     std::thread order(take_order);
     std::thread kitchen(cooking);
+    kitchen.detach();
     std::thread delivery(courier);
     
     order.join();
-    kitchen.join();
+    if(kitchen.joinable()) kitchen.join();
     delivery.join();
 }
